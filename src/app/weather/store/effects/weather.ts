@@ -19,7 +19,7 @@ export class WeatherEffects {
         mergeMap(
             (data) => this.weatherService.searchWeatherByCity(data.cityName)
                 .pipe(map((response) => new weatherActionTypes.FetchWeatherByCitySuccess(response)),
-                    catchError((error) => of(new weatherActionTypes.FetchWeatherByCityFailure(error))))
+                    catchError((error) => of(new weatherActionTypes.FetchWeatherByCityFailure(error?.error?.message ? error.error.message : 'unknown error'))))
         )
     ));
 }

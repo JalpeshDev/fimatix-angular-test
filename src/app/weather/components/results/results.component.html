@@ -1,5 +1,7 @@
 <ng-container *ngIf="(error$ | async) && !(isLoading$ | async)">
-  {{ (error$ | async)?.message }}
+  <span class="error">
+    {{ (error$ | async) }}
+  </span>
 </ng-container>
 
 <ng-container *ngIf="!(isLoading$ | async)">

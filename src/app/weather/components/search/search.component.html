@@ -4,7 +4,7 @@
       [formControl]="searchCtrl">
   </div>
   <button class="btn-search btn btn-primary mt-3 col-4" type="submit" (click)="search()">Search</button>
-  <span class="error-class" *ngIf="searchCtrl?.touched && searchCtrl?.errors?.required">
+  <span class="error" *ngIf="searchCtrl?.touched && searchCtrl?.errors?.required">
     Please Enter City
   </span>
 </form>
