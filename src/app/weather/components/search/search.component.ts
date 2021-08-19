@@ -1,16 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html'
 })
 export class SearchComponent {
-  // IMPLEMENT ANY INPUT OR OUTPUT YOU MIGHT NEED
+  //form control for search input
+  searchCtrl: FormControl = new FormControl('', [Validators.required]);
+  
+  //emit the search event when user click on search button
+  @Output() onSearch = new EventEmitter();
 
-  constructor() {
-  }
+  constructor() { }
 
+  //function to search the weather data by city
   search() {
-    // TO BE IMPLEMENTED
+    // check control is not valid then we showing error else we emit event to get the weather data
+    if (!this.searchCtrl.valid) {
+      this.searchCtrl.markAsTouched();
+      return;
+    }
+    this.onSearch.emit(this.searchCtrl.value);
+    this.searchCtrl.reset();
   }
 }

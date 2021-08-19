@@ -13,7 +13,7 @@ export class WeatherService {
 
   constructor(private http: HttpClient) { }
 
-  searchWeatherForCity(city) {
-    // implement the service
+  searchWeatherByCity(city: string) {
+    return this.http.get(`${this.url}?q=${city}&appid=${this.params.APPID}&units=${this.params.units}`)
   }
 }

@@ -9,17 +9,18 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
-// import { StoreModule } from '@ngrx/store';
-// import { reducers } from './store/reducers/weather';
-// import { GetWeatherEffect } from './store/effects/weather';
-// import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { WeatherEffects } from './store/effects/weather';
+import { reducers } from './store';
+import { WeatherContainerComponent } from './components/weather-container/weather-container.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    // StoreModule.forRoot({ weather: reducers }),
-    // EffectsModule.forRoot([GetWeatherEffect]),
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([WeatherEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
     ReactiveFormsModule
@@ -27,7 +28,8 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
   declarations: [
     SearchComponent,
     ResultsComponent,
-    WeatherContainer
+    WeatherContainer,
+    WeatherContainerComponent
   ],
   providers: [
     WeatherService

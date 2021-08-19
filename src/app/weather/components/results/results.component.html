@@ -1,20 +1,58 @@
-<table class="table">
-  <thead class="thead-dark">
+<ng-container *ngIf="(error$ | async) && !(isLoading$ | async)">
+  {{ (error$ | async)?.message }}
+</ng-container>
+
+<ng-container *ngIf="!(isLoading$ | async)">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">City</th>
+        <th scope="col">6 AM</th>
+        <th scope="col">12 PM</th>
+        <th scope="col">6 PM</th>
+        <th scope="col">12 AM</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="weatherList.length else noRecords">
+        <tr *ngFor="let weather of weatherList">
+          <td class="city-name" scope="row">{{weather?.city?.name}}</td>
+          <td scope="row">
+            <app-weather-container [temperature]="weather.morningWeather?.main?.temp"
+              [weather_icon]="weather.morningWeather?.weather[0]?.icon"
+              [weather_description]="weather.morningWeather?.weather[0]?.description">
+            </app-weather-container>
+          </td>
+          <td scope="row">
+            <app-weather-container [temperature]="weather.noonWeather?.main?.temp"
+              [weather_icon]="weather?.noonWeather.weather[0]?.icon"
+              [weather_description]="weather.noonWeather?.weather[0]?.description">
+            </app-weather-container>
+          </td>
+          <td scope="row">
+            <app-weather-container [temperature]="weather.eveningWeather?.main?.temp"
+              [weather_icon]="weather.eveningWeather?.weather[0]?.icon"
+              [weather_description]="weather.eveningWeather?.weather[0]?.description">
+            </app-weather-container>
+          </td>
+          <td scope="row">
+            <app-weather-container [temperature]="weather.nightWeather?.main?.temp"
+              [weather_icon]="weather.nightWeather?.weather[0]?.icon"
+              [weather_description]="weather.nightWeather?.weather[0]?.description">
+            </app-weather-container>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</ng-container>
+
+<ng-container *ngIf="(isLoading$ | async)">
+  Loading...
+</ng-container>
+
+<ng-template #noRecords>
   <tr>
-    <th scope="col">City</th>
-    <th scope="col">6 AM</th>
-    <th scope="col">12 PM</th>
-    <th scope="col">6 PM</th>
-    <th scope="col">12 AM</th>
+    <td class="text-center" colspan="5">No records Found</td>
   </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td scope="row">London</td>
-    <td scope="row">3 &deg;</td>
-    <td scope="row">12.5 &deg;</td>
-    <td scope="row">9 &deg;</td>
-    <td scope="row">2 &deg;</td>
-  </tr>
-  </tbody>
-</table>
+</ng-template>
